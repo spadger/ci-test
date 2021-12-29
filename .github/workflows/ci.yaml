@@ -13,21 +13,22 @@ on:
         description: "The second fruity job output"
         value: ${{ jobs.AAA.outputs.compo }}
 
+      foxed:
+        description: "The second fruity job output"
+        value: ${{ jobs.AAA.outputs.fixed }}
+
 env:
   REGISTRY: ghcr.io
 
 jobs:
   AAA:
     outputs:
+      fixed: "it is fixed"
       version: ${{ steps.version.outputs.version }}
       compo: ${{ steps.version.outputs.action_fruit }}
     runs-on: ubuntu-latest
     steps:
-      - uses: hmarr/debug-action@v2
 
-      - name: Hello A1
-        run: echo "Hello A1"
-      
       - name: Calculate version
         id: version
         run: |
@@ -43,10 +44,9 @@ jobs:
     needs: AAA
     runs-on: ubuntu-latest
     steps:
-      - uses: hmarr/debug-action@v2
       
       - name: Hello B1
-        run: echo "Hello B1 ZZZ ${{ inputs.version }} ZZZ ${{ inputs.compo }} ZZZ ${{ inputs.clanger }} ZZZ ${{ inputs.version }} ZZZ"
+        run: echo "Hello B1 version- ${{ inputs.version }} compo- ${{ inputs.compo }} clanger- ${{ inputs.clanger }} foxed ${{ inputs.foxed }} ZZZ"
       
       - name: Version step
         run: echo "${{ steps.version }}"
