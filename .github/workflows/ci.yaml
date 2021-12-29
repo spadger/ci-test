@@ -46,7 +46,7 @@ jobs:
       - uses: hmarr/debug-action@v2
       
       - name: Hello B1
-        run: echo "Hello B1"
+        run: echo "Hello B1 ZZZ ${{ inputs.version }} ZZZ ${{ inputs.compo }} ZZZ ${{ inputs.clanger }} ZZZ ${{ inputs.version }} ZZZ"
       
       - name: Version step
         run: echo "${{ steps.version }}"
