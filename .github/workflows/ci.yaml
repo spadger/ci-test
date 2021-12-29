@@ -3,6 +3,19 @@ name: CI
 on:
   push:
     branches: [ main ]
+    outputs:
+      version:
+        description: "The first job output"
+        value: ${{ jobs.AAA.outputs.version }}
+
+      clanger:
+        description: "The second fruity job output"
+        value: ${{ jobs.AAA.outputs.compo }}
+
+      foxed:
+        description: "The second fruity job output"
+        value: ${{ jobs.AAA.outputs.fixed }}
+  
   workflow_call:
     outputs:
       version:
