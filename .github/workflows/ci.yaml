@@ -46,10 +46,10 @@ jobs:
     steps:
       
       - name: Hello B1
-        run: echo "Hello B1 version- ${{ inputs.version }} compo- ${{ inputs.compo }} clanger- ${{ inputs.clanger }} foxed ${{ inputs.foxed }} ZZZ"
+        run: echo "Hello B1 version=|${{ inputs.version }}| compo=|${{ inputs.compo }}| clanger=|${{ inputs.clanger }}| foxed=|${{ inputs.foxed }}|"
       
       - name: Version step
-        run: echo "${{ steps.version }}"
+        run: echo "${{ toJSON(github) }}"
 
       - name: Print version step outputs version
         run: echo "Hello ${{ steps.version.outputs }}"
