@@ -3,32 +3,6 @@ name: CI
 on:
   push:
     branches: [ main ]
-    outputs:
-      version:
-        description: "The first job output"
-        value: ${{ jobs.AAA.outputs.version }}
-
-      clanger:
-        description: "The second fruity job output"
-        value: ${{ jobs.AAA.outputs.compo }}
-
-      foxed:
-        description: "The second fruity job output"
-        value: ${{ jobs.AAA.outputs.fixed }}
-  
-  workflow_call:
-    outputs:
-      version:
-        description: "The first job output"
-        value: ${{ jobs.AAA.outputs.version }}
-
-      clanger:
-        description: "The second fruity job output"
-        value: ${{ jobs.AAA.outputs.compo }}
-
-      foxed:
-        description: "The second fruity job output"
-        value: ${{ jobs.AAA.outputs.fixed }}
 
 env:
   REGISTRY: ghcr.io
@@ -59,11 +33,11 @@ jobs:
     steps:
       
       - name: Hello B1
-        run: echo "Hello B1 version=|${{ inputs.version }}| compo=|${{ inputs.compo }}| clanger=|${{ inputs.clanger }}| foxed=|${{ inputs.foxed }}|"
+        run: echo "Hello B1 ${{ jobs.AAA.steps.version.outputs..version }}"
       
       - name: Version step
         run: echo "${{ toJSON(github) }}"
 
       - name: Print version step outputs version
-        run: echo "Hello ${{ steps.version.outputs }}"
+        run: echo "Hello ${{ jobs.AAA.steps.version.outputs.action_fruit }}"
 
