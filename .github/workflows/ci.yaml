@@ -11,6 +11,8 @@ jobs:
   AAA:
     runs-on: ubuntu-latest
     steps:
+      -uses: hmarr/debug-action@v2
+
       - name: Hello A1
         run: echo "Hello A1"
       
@@ -28,6 +30,8 @@ jobs:
     needs: AAA
     runs-on: ubuntu-latest
     steps:
+      - uses: hmarr/debug-action@v2
+      
       - name: Hello B1
         run: echo "Hello B1"
       
