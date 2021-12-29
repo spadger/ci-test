@@ -17,19 +17,20 @@ jobs:
     steps:
 
       - name: Calculate version
-        id: version
         run: |
           IMAGE_VERSION=$(date +'%Y-%m-%d-%H%M')
           echo "Version will be $IMAGE_VERSION"
-          echo "::set-output name=version::$IMAGE_VERSION"
-          echo "::set-output name=action_fruit::strawberry"
-          echo "Version output is: ${{ steps.version.outputs.version  }}"
-          echo "All Steps: ${{ steps.version }}"
+          echo "$IMAGE_VERSION" >> $GITHUB_ENV
+          echo "$IMAGE_VERSION" > eeh-version
           echo "Fininshed Verison stuff"
 
+       - name: 'Upload version artifact'
+          uses: actions/upload-artifact@v2
+          with:
+            name: version
+            path: eeh-version
+            retention-days: 5
   BBB:
-    inputs:
-
     needs: AAA
     runs-on: ubuntu-latest
     steps:
@@ -37,9 +38,11 @@ jobs:
       # - name: Hello B1
       #   run: echo "Hello B1 ${{ jobs.AAA.steps.version.outputs.version }}"
       
-      - name: Version step
-        run: echo "${{ toJSON(jobs.AAA.outputs.fixed) }}"
+      - name: Get version
+        uses: actions/download-artifact@v2
+        with:
+          name: version
 
-      # - name: Print version step outputs version
-      #   run: echo "Hello ${{ jobs.AAA.steps.version.outputs.action_fruit }}"
+      - name: Print version step outputs version
+        run: cat eeh-version
 
