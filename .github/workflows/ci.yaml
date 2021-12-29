@@ -1,0 +1,26 @@
+name: CI
+
+on:
+  push:
+    branches: [ main ]
+
+env:
+  REGISTRY: ghcr.io
+
+jobs:
+  AAA:
+    runs-on: ubuntu-latest
+    steps:
+      - name: A1
+        run: echo "Hello A1"
+      - name: A2
+        run: "Hello A2"
+
+  BBB:
+    runs-on: ubuntu-latest
+    steps:
+      - name: B1
+        run: echo "Hello B1"
+      - name: B2
+        run: "Hello B2"
+
