@@ -16,7 +16,6 @@ jobs:
         run: |
           IMAGE_VERSION=$(date +'%Y-%m-%d-%H%M')
           echo "Version will be $IMAGE_VERSION"
-          echo "$IMAGE_VERSION" >> $GITHUB_ENV
           echo "$IMAGE_VERSION" > eeh-version
           echo "Fininshed Verison stuff"
 
