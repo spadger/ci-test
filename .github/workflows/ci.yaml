@@ -31,5 +31,5 @@ jobs:
 
       
       - name: Print recovered version
-        run: echo "Hello ${{ env.REVOVERED_VERSION }}"
+        run: echo "Hello ${{ steps.version.outputs.version }}"
 
