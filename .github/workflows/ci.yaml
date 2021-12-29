@@ -9,7 +9,6 @@ env:
 
 jobs:
   AAA:
-    id: AAA
     runs-on: ubuntu-latest
     steps:
       - name: Hello A1
