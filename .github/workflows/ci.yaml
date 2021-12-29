@@ -28,6 +28,8 @@ jobs:
           echo "Fininshed Verison stuff"
 
   BBB:
+    inputs:
+
     needs: AAA
     runs-on: ubuntu-latest
     steps:
@@ -36,7 +38,7 @@ jobs:
       #   run: echo "Hello B1 ${{ jobs.AAA.steps.version.outputs.version }}"
       
       - name: Version step
-        run: echo "${{ toJSON(jobs) }}"
+        run: echo "${{ toJSON(jobs.AAA.outputs.fixed) }}"
 
       # - name: Print version step outputs version
       #   run: echo "Hello ${{ jobs.AAA.steps.version.outputs.action_fruit }}"
