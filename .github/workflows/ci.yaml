@@ -32,12 +32,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       
-      - name: Hello B1
-        run: echo "Hello B1 ${{ jobs.AAA.steps.version.outputs.version }}"
+      # - name: Hello B1
+      #   run: echo "Hello B1 ${{ jobs.AAA.steps.version.outputs.version }}"
       
       - name: Version step
         run: echo "${{ toJSON(github) }}"
 
-      - name: Print version step outputs version
-        run: echo "Hello ${{ jobs.AAA.steps.version.outputs.action_fruit }}"
+      # - name: Print version step outputs version
+      #   run: echo "Hello ${{ jobs.AAA.steps.version.outputs.action_fruit }}"
 
