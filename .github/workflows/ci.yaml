@@ -36,7 +36,7 @@ jobs:
       #   run: echo "Hello B1 ${{ jobs.AAA.steps.version.outputs.version }}"
       
       - name: Version step
-        run: echo "${{ toJSON(github) }}"
+        run: echo "${{ toJSON(jobs) }}"
 
       # - name: Print version step outputs version
       #   run: echo "Hello ${{ jobs.AAA.steps.version.outputs.action_fruit }}"
