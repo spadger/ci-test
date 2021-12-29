@@ -33,7 +33,7 @@ jobs:
     steps:
       
       - name: Hello B1
-        run: echo "Hello B1 ${{ jobs.AAA.steps.version.outputs..version }}"
+        run: echo "Hello B1 ${{ jobs.AAA.steps.version.outputs.version }}"
       
       - name: Version step
         run: echo "${{ toJSON(github) }}"
