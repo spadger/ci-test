@@ -35,5 +35,5 @@ jobs:
         run: echo "${{ steps }}"
 
       - name: Print recovered version
-      run: echo "Hello ${{ steps.version.outputs.version }}"
+        run: echo "Hello ${{ steps.version.outputs.version }}"
 
