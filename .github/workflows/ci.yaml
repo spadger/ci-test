@@ -9,19 +9,28 @@ env:
 
 jobs:
   AAA:
+    id: AAA
     runs-on: ubuntu-latest
     steps:
-      - name: A1
+      - name: Hello A1
         run: echo "Hello A1"
-      - name: A2
-        run: echo "Hello A2"
+      
+      - name: Calculate version
+        id: version
+        run: |
+          IMAGE_VERSION=$(date +'%Y-%m-%d-%H%M')
+          echo "::set-output name=version::$IMAGE_VERSION"
+
 
   BBB:
     needs: AAA
     runs-on: ubuntu-latest
     steps:
-      - name: B1
+      - name: Hello B1
         run: echo "Hello B1"
-      - name: B2
-        run: echo "Hello B2"
+      
+
+      
+      - name: Print recovered version
+        run: echo "Hello ${{ env.REVOVERED_VERSION }}"
 
