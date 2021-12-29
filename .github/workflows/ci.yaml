@@ -23,7 +23,7 @@ jobs:
           echo "Version will be $IMAGE_VERSION"
           echo "::set-output name=version::$IMAGE_VERSIONI"
           echo "Version output is: ${{ steps.version.outputs.version  }}"
-          echo "All Steps: ${{ parseJSON(steps)  }}"
+          echo "All Steps: ${{ steps.version }}"
           echo "Fininshed Verison stuff"
 
   BBB:
@@ -35,9 +35,9 @@ jobs:
       - name: Hello B1
         run: echo "Hello B1"
       
-      - name: All Steps
-        run: echo "${{ parseJSON(steps) }}"
+      - name: Version step
+        run: echo "${{ steps.version }}"
 
-      - name: Print recovered version
-        run: echo "Hello ${{ steps.version.outputs.version }}"
+      - name: Print version step outputs version
+        run: echo "Hello ${{ steps.version.outputs }}"
 
