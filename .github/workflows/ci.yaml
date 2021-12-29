@@ -33,7 +33,7 @@ jobs:
         run: |
           IMAGE_VERSION=$(date +'%Y-%m-%d-%H%M')
           echo "Version will be $IMAGE_VERSION"
-          echo "::set-output name=version::$IMAGE_VERSIONI"
+          echo "::set-output name=version::$IMAGE_VERSION"
           echo "::set-output name=action_fruit::strawberry"
           echo "Version output is: ${{ steps.version.outputs.version  }}"
           echo "All Steps: ${{ steps.version }}"
