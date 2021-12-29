@@ -17,6 +17,7 @@ jobs:
         run: echo "Hello A2"
 
   BBB:
+    needs: AAA
     runs-on: ubuntu-latest
     steps:
       - name: B1
