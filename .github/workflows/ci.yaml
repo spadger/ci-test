@@ -3,12 +3,24 @@ name: CI
 on:
   push:
     branches: [ main ]
+  workflow_call:
+    outputs:
+      version:
+        description: "The first job output"
+        value: ${{ jobs.AAA.outputs.version }}
+
+      clanger:
+        description: "The second fruity job output"
+        value: ${{ jobs.AAA.outputs.compo }}
 
 env:
   REGISTRY: ghcr.io
 
 jobs:
   AAA:
+    outputs:
+      version: ${{ steps.version.outputs.version }}
+      compo: ${{ steps.version.outputs.action_fruit }}
     runs-on: ubuntu-latest
     steps:
       - uses: hmarr/debug-action@v2
