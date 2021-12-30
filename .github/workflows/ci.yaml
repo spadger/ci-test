@@ -17,4 +17,25 @@ jobs:
           echo "$IMAGE_VERSION" > eeh-version
           echo "Fininshed Verison stuff"
 
+      - name: Install Open VPN
+        run: sudo apt-get install openvpn
+      
+      - name: Connect VPN
+        uses: golfzaptw/action-connect-ovpn@master
+        id: connect_vpn
+        with:
+          PING_URL: '172.28.0.10'
+          SECRET: ${{ secrets.EEH_OVPN_CREDS }}
+        env:
+          CA_CRT: ${{ secrets.EH_OVPN_CA_CERT}}
+          USER_CRT: ${{ secrets.EEH_OVPN_USER_CERT }}
+          USER_KEY: ${{ secrets.EEH_OVPN_USER_KEY }}
+      
+      - name: Check Connect VPN
+        run: echo ${{ steps.connect_vpn.outputs.STATUS }}
+      
+      - name: kill vpn
+        if: always()
+        run: sudo killall openvpn
+
 
