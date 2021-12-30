@@ -12,7 +12,7 @@ jobs:
 
       - name: get tag
         run: |
-          echo "Tag: ${{ toJSON(github) }}"
+          echo "Tag: ${{ event.release.tag_name }}"
           
           echo "$IMAGE_VERSION" > eeh-version
           echo "Fininshed Verison stuff"
