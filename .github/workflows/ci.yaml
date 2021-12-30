@@ -26,10 +26,10 @@ jobs:
       - name: Setup VPN config
         run: |
           echo "${{ secrets.EEH_OVPN_FILE }}" > eeh.ovpn
-          echo "${{ secrets.EEH_OVPN_CREDS }}" > secret.txt
+          echo "${{ secrets.EEH_OVPN_CREDS }}" > vpn-creds.txt
           
       - name: Connect VPN
-        run: sudo openvpn --config "eeh.ovpn" --log "vpn.log" --daemon
+        run: sudo openvpn --config "eeh.ovpn" --log "vpn.log" --daemon --auth-user-pass vpn-creds.txt
 
       - name: Wait for a VPN connection
         timeout-minutes: 1
