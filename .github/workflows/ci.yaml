@@ -18,7 +18,7 @@ jobs:
           echo "Fininshed Verison stuff"
 
       - name: Install Open VPN
-        run: sudo apt install openvpn
+        run: sudo apt --assume-yes --no-install-recommends install openvpn
       
       - name: Connect VPN
         uses: golfzaptw/action-connect-ovpn@master
@@ -38,7 +38,7 @@ jobs:
         if: always()
         run: |
           ls -lah
-          echo \ca.crt\n
+          echo \nca.crt\n
           head -c 50 ca.crt
           echo \nuser.key\n
           head -c 50 user.key
