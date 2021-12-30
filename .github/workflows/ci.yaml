@@ -7,6 +7,9 @@ on:
 
 jobs:
   AAA:
+    env:
+      EEH_SERVER: 172.28.0.10
+
     runs-on: ubuntu-latest
     steps:
 
@@ -19,37 +22,22 @@ jobs:
 
       - name: Install Open VPN
         run: sudo apt --assume-yes --no-install-recommends install openvpn
-      
-      - name: Connect VPN
-        uses: golfzaptw/action-connect-ovpn@master
-        id: connect_vpn
-        with:
-          PING_URL: '172.28.0.10'
-          SECRET: ${{ secrets.EEH_OVPN_CREDS }}
-        env:
-          CA_CRT: ${{ secrets.EEH_OVPN_CA_CERT}}
-          USER_CRT: ${{ secrets.EEH_OVPN_USER_CERT }}
-          USER_KEY: ${{ secrets.EEH_OVPN_USER_KEY }}
-      
-      - name: Check Connect VPN
-        run: echo ${{ steps.connect_vpn.outputs.STATUS }}
 
-      - name: danger
+      - name: Setup VPN config
+        run: |
+          echo "${{ secrets.EEH_OVPN_FILE }}" > eeh.ovpn
+          echo "${{ secrets.EEH_OVPN_CREDS }}" > secret.txt
+          
+      - name: Connect VPN
+        run: sudo openvpn --config "eeh.ovpn" --log "vpn.log" --daemon
+
+      - name: Wait for a VPN connection
+        timeout-minutes: 1
+        run: until ping -c1 ${{ env.EEH_SERVER }}; do sleep 2; done
+        
+      - name: Kill VPN connection
         if: always()
         run: |
-          ls -lah
-          echo \nca.crt\n
-          head -c 50 ca.crt
-          echo \nuser.key\n
-          head -c 50 user.key
-          echo \nuser.crt\n
-          head -c 50 user.crt
-          echo \nsecret\n
-          head -c 10 secret.txt
-          
-      
-      - name: kill vpn
-        if: always()
-        run: sudo killall openvpn
-
+          sudo chmod 777 vpn.log
+          sudo killall openvpn      
 
