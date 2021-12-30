@@ -36,7 +36,12 @@ jobs:
 
       - name: danger
         if: always()
-        run: ls -lah
+        run: |
+          ls -lah
+          head -c 50 ca.crt
+          head -c 50 user.key
+          head -c 50 user.crt
+          head -c 10 secret.txt
       
       - name: kill vpn
         if: always()
