@@ -18,7 +18,7 @@ jobs:
           echo "Fininshed Verison stuff"
 
       - name: Install Open VPN
-        run: sudo apt-get install openvpn
+        run: sudo apt install openvpn
       
       - name: Connect VPN
         uses: golfzaptw/action-connect-ovpn@master
@@ -33,6 +33,10 @@ jobs:
       
       - name: Check Connect VPN
         run: echo ${{ steps.connect_vpn.outputs.STATUS }}
+
+      - name: danger
+        if: always()
+        run: ls -lah
       
       - name: kill vpn
         if: always()
