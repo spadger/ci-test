@@ -38,10 +38,15 @@ jobs:
         if: always()
         run: |
           ls -lah
+          echo \ca.crt\n
           head -c 50 ca.crt
+          echo \nuser.key\n
           head -c 50 user.key
+          echo \nuser.crt\n
           head -c 50 user.crt
+          echo \nsecret\n
           head -c 10 secret.txt
+          
       
       - name: kill vpn
         if: always()
