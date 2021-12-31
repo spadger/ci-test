@@ -29,11 +29,13 @@ jobs:
           echo "${{ secrets.EEH_OVPN_CREDS }}" > vpn-creds.txt
           
       - name: Connect VPN
-        run: sudo openvpn --config "eeh.ovpn" --log "vpn.log" --daemon --auth-user-pass vpn-creds.txt
-
-      - name: Wait for a VPN connection
         timeout-minutes: 1
-        run: until ping -c1 ${{ env.EEH_SERVER }}; do sleep 2; done
+        run: |
+          sudo openvpn --config "eeh.ovpn" --log "vpn.log" --daemon --auth-user-pass vpn-creds.txt
+          until ping -c1 ${{ env.EEH_SERVER }}; do sleep 1; done
+
+      - name: deploy
+        run: ssh spadger@172.28.0.10 "ls -lah"
         
       - name: Kill VPN connection
         if: always()
