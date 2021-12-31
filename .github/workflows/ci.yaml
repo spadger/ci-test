@@ -36,7 +36,7 @@ jobs:
           until ping -c1 ${{ env.EEH_SERVER }}; do sleep 1; done
 
       - name: deploy
-        run: ssh -i eeh_ssh_key spadger@172.28.0.10 "ls -lah"
+        run: ssh -o StrictHostKeyChecking=no -i eeh_ssh_key spadger@172.28.0.10 "ls -lah"
         
       - name: Kill VPN connection
         if: always()
