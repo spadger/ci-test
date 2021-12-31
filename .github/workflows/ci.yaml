@@ -27,6 +27,7 @@ jobs:
         run: |
           echo "${{ secrets.EEH_OVPN_FILE }}" > eeh.ovpn
           echo "${{ secrets.EEH_OVPN_CREDS }}" > vpn-creds.txt
+          echo "${{ secrets.EEH_SSH_KEY }}" > ~/.ssh/id_rsa
           
       - name: Connect VPN
         timeout-minutes: 1
