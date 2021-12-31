@@ -30,6 +30,7 @@ jobs:
           sudo openvpn --config "eeh.ovpn" --log "vpn.log" --daemon --auth-user-pass vpn-creds.txt
           until ping -c1 ${{ env.EEH_SERVER }}; do sleep 1; done
 
+      - name: Deploy
         run: |
           echo "${{ secrets.EEH_SSH_KEY }}" > eeh_ssh_key
           chmod 400 eeh_ssh_key
