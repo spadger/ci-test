@@ -23,20 +23,17 @@ jobs:
       - name: Install Open VPN
         run: sudo apt --assume-yes --no-install-recommends install openvpn
 
-      - name: Setup VPN config
+      - name: Init VPN
         run: |
           echo "${{ secrets.EEH_OVPN_FILE }}" > eeh.ovpn
           echo "${{ secrets.EEH_OVPN_CREDS }}" > vpn-creds.txt
-          echo "${{ secrets.EEH_SSH_KEY }}" > eeh_ssh_key
-          
-      - name: Connect VPN
-        timeout-minutes: 1
-        run: |
           sudo openvpn --config "eeh.ovpn" --log "vpn.log" --daemon --auth-user-pass vpn-creds.txt
           until ping -c1 ${{ env.EEH_SERVER }}; do sleep 1; done
 
-      - name: deploy
-        run: ssh -o StrictHostKeyChecking=no -i eeh_ssh_key spadger@172.28.0.10 "ls -lah"
+        run: |
+          echo "${{ secrets.EEH_SSH_KEY }}" > eeh_ssh_key
+          chmod 400 eeh_ssh_key
+          ssh -o StrictHostKeyChecking=no -i eeh_ssh_key spadger@172.28.0.10 "ls -lah"
         
       - name: Kill VPN connection
         if: always()
