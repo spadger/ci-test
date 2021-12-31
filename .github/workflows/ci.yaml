@@ -27,7 +27,7 @@ jobs:
         run: |
           echo "${{ secrets.EEH_OVPN_FILE }}" > eeh.ovpn
           echo "${{ secrets.EEH_OVPN_CREDS }}" > vpn-creds.txt
-          echo "${{ secrets.EEH_SSH_KEY }}" > ~/.ssh/id_rsa
+          echo "${{ secrets.EEH_SSH_KEY }}" > eeh_ssh_key
           
       - name: Connect VPN
         timeout-minutes: 1
@@ -36,7 +36,7 @@ jobs:
           until ping -c1 ${{ env.EEH_SERVER }}; do sleep 1; done
 
       - name: deploy
-        run: ssh spadger@172.28.0.10 "ls -lah"
+        run: ssh -i eeh_ssh_key spadger@172.28.0.10 "ls -lah"
         
       - name: Kill VPN connection
         if: always()
