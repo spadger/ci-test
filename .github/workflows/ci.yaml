@@ -21,7 +21,7 @@ jobs:
           echo "Fininshed Verison stuff"
 
       - name: Patch build info
-        steps: |
+        run: |
           sed -i 's/VERSION_NOT_SET/${{ github.event.release.tag_name }}/' application.conf
           sed -i 's/BUILD_DATE_NOT_SET/$(date -u +"%Y-%m-%dT%H:%M:%SZ")/' application.conf
 
