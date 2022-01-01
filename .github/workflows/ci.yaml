@@ -22,9 +22,9 @@ jobs:
 
       - name: Patch build info
         run: |
-          echo "${{ toJSON(github) }}"
+          pwd
           sed -i 's/VERSION_NOT_SET/${{ github.event.release.tag_name }}/' application.conf
-          sed -i 's/SHA_NOT_SET/${{ github.event.release.tag_name }}/' application.conf
+          sed -i 's/SHA_NOT_SET/${{ github.sha }}/' application.conf
           sed -i 's/BUILD_DATE_NOT_SET/$(date -u +"%Y-%m-%dT%H:%M:%SZ")/' application.conf
 
           cat application.conf
