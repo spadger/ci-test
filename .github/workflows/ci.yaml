@@ -29,25 +29,26 @@ jobs:
 
           cat application.conf
 
-      # - name: Install Open VPN
-      #   run: sudo apt --assume-yes --no-install-recommends install openvpn
+      - name: Install Open VPN
+        run: sudo apt --assume-yes --no-install-recommends install openvpn
 
-      # - name: Init VPN
-      #   run: |
-      #     echo "${{ secrets.EEH_OVPN_FILE }}" > eeh.ovpn
-      #     echo "${{ secrets.EEH_OVPN_CREDS }}" > vpn-creds.txt
-      #     sudo openvpn --config "eeh.ovpn" --log "vpn.log" --daemon --auth-user-pass vpn-creds.txt
-      #     until ping -c1 ${{ env.EEH_SERVER }}; do sleep 1; done
+      - name: Init VPN
+        run: |
+          echo "${{ secrets.EEH_OVPN_FILE }}" > eeh.ovpn
+          echo "${{ secrets.EEH_OVPN_CREDS }}" > vpn-creds.txt
+          sudo openvpn --config "eeh.ovpn" --log "vpn.log" --daemon --auth-user-pass vpn-creds.txt
+          until ping -c1 ${{ env.EEH_SERVER }}; do sleep 1; done
 
-      # - name: Deploy
-      #   run: |
-      #     echo "${{ secrets.EEH_SSH_KEY }}" > eeh_ssh_key
-      #     chmod 400 eeh_ssh_key
-      #     ssh -o StrictHostKeyChecking=no -i eeh_ssh_key spadger@172.28.0.10 "ls -lah"
+      - name: Deploy
+        run: |
+          echo "${{ secrets.EEH_SSH_KEY }}" > eeh_ssh_key
+          chmod 400 eeh_ssh_key
+          ssh -o StrictHostKeyChecking=no -i eeh_ssh_key spadger@172.28.0.10 "sed -i 's/^\(IMAGE=ghcr.io\/eehackspace\/access-control:\).*/\1${{ github.event.release.tag_name }}/' z.sh"
+          ssh -o StrictHostKeyChecking=no -i eeh_ssh_key spadger@172.28.0.10 "sed -i 's/^\(IMAGE=ghcr.io\/eehackspace\/access-control:\).*/\1${{ github.event.release.tag_name }}/' z.sh"
         
-      # - name: Kill VPN connection
-      #   if: always()
-      #   run: |
-      #     sudo chmod 777 vpn.log
-      #     sudo killall openvpn      
+      - name: Kill VPN connection
+        if: always()
+        run: |
+          sudo chmod 777 vpn.log
+          sudo killall openvpn      
 
